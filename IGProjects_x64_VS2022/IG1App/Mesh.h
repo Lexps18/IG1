@@ -26,7 +26,9 @@ public:
 	void load();
 	void unload();
 
-	static Mesh* generateRegularPolygon(GLuint num, GLdouble r);
+	static Mesh* generateRegularPolygon(GLuint num, GLdouble r, GLuint primitiva);
+	static Mesh* generateRectangle(GLdouble w, GLdouble h);
+	static Mesh* generateRGBRectangle(GLdouble w, GLdouble h);
 
 protected:
 	GLuint mPrimitive =

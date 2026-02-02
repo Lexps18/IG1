@@ -112,12 +112,12 @@ Mesh::createRGBAxes(GLdouble l)
 	return mesh;
 }
 
-Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r) 
+Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r, GLuint primitiva)
 {
 
 	Mesh* mesh = new Mesh();
 
-	mesh->mPrimitive = GL_LINE_LOOP;
+	mesh->mPrimitive = primitiva;
 
 	mesh->mNumVertices = num;
 	mesh->vVertices.reserve(mesh->mNumVertices);
@@ -131,9 +131,48 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 		y = r * sin(radians(angulo));
 		mesh->vVertices.emplace_back(x, y, 0.0);
 		angulo += 360.0/num;
-		
-		
 	}
+
+	if (primitiva == GL_TRIANGLES) 
+	{
+		mesh->vColors.push_back({ 1, 0, 0, 1 }); // Rojo
+		mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
+		mesh->vColors.push_back({ 0, 0, 1, 1 }); // Azul
+	}
+	return mesh;
+}
+
+Mesh* Mesh::generateRectangle(GLdouble w, GLdouble h) 
+{
+	Mesh* mesh = new Mesh();
+
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+	int num = 4;
+	mesh->mNumVertices = num;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	GLdouble altura = h / 2.0;
+	GLdouble ancho = w / 2.0;
+
+	mesh->vVertices.emplace_back(-ancho, altura, 0.0);
+	mesh->vVertices.emplace_back(-ancho, -altura, 0.0);
+	mesh->vVertices.emplace_back(ancho, altura, 0.0);
+	mesh->vVertices.emplace_back(ancho, -altura, 0.0);
 
 	return mesh;
 }
+
+Mesh* Mesh::generateRGBRectangle(GLdouble w, GLdouble h) 
+{
+	Mesh* mesh = generateRectangle(w, h);
+
+	mesh->vColors.reserve(mesh->mNumVertices);
+
+	mesh->vColors.push_back({ 1, 0, 0, 1 }); // Rojo
+	mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
+	mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
+	mesh->vColors.push_back({ 0, 0, 1, 1 }); // Azul
+
+	return mesh;
+}
+

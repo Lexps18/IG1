@@ -15,14 +15,17 @@ Scene1::init()
 	// Textures
 
 	// Graphics objects (entities) of the scene
-	RGBTriangle* tri = new RGBTriangle(200.0); // tamaño 200
-	gObjects.push_back(tri);
+	RGBTriangle* triangulo = new RGBTriangle(200.0); // triangulo
+	//gObjects.push_back(triangulo);
+
+	RGBRectangle* rectangulo = new RGBRectangle(200.0, 100.0); // triangulo
+	gObjects.push_back(rectangulo);
 
 	gObjects.push_back(new RGBAxes(400.0));
-	RegularPolygon* pentagono= new RegularPolygon(5,200.0);//pentagono
+	RegularPolygon* hexagono = new RegularPolygon(6,200.0);//hexagono
 	glm::vec4 magenta(255.0, 0.0, 255.0, 1.0);
-	pentagono->setColor(magenta);
-	gObjects.push_back(pentagono);
+	hexagono->setColor(magenta);
+	gObjects.push_back(hexagono);
 
 	RegularPolygon* circulo = new RegularPolygon(50, 200.0);//circulo
 	glm::vec4 amarillo(255.0, 255.0, 0.0, 1.0);

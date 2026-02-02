@@ -69,10 +69,15 @@ RGBAxes::RGBAxes(GLdouble l)
 
 RegularPolygon::RegularPolygon(GLuint num, GLdouble r)
 {
-	mMesh = Mesh::generateRegularPolygon(num, r);
+	mMesh = Mesh::generateRegularPolygon(num, r, GL_LINE_LOOP);
 }
 
-RGBTriangle::RGBTriangle(GLdouble r) 
+RGBTriangle::RGBTriangle(GLdouble r)
 {
-	mMesh = Mesh::generateRegularPolygon(3, r);
+	mMesh = Mesh::generateRegularPolygon(3, r, GL_TRIANGLES);
+}
+
+RGBRectangle::RGBRectangle(GLdouble w, GLdouble h)
+{
+	mMesh = Mesh::generateRGBRectangle(w, h);
 }

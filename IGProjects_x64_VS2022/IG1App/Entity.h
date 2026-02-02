@@ -71,6 +71,11 @@ public:
 	explicit RGBTriangle(GLdouble r);
 };
 
+class RGBRectangle : public EntityWithColors {
+public:
+	explicit RGBRectangle(GLdouble w, GLdouble h);
+};
+
 class RegularPolygon : public SingleColorEntity
 {
 public:
