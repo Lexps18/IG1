@@ -19,6 +19,7 @@ public:
 	Abs_Entity& operator=(const Abs_Entity& e) = delete; // no copy assignment
 
 	virtual void render(const glm::mat4& modelViewMat) const = 0; // abstract method
+	virtual void update() {};
 
 	// modeling matrix
 	glm::mat4 const& modelMat() const { return mModelMat; };
@@ -68,18 +69,30 @@ public:
 
 class RGBTriangle : public EntityWithColors {
 public:
-	explicit RGBTriangle(GLdouble r);
+	explicit RGBTriangle(GLdouble r, GLfloat Radio);
+	virtual void update();
+protected:
+	float mSpinAngle = 0.0f;  // rotación sobre sí mismo
+	float mOrbitAngle = 0.0f; //rotación sobre la circunferencia
+	float radio; //radio de la circunferencia
 };
 
 class RGBRectangle : public EntityWithColors {
 public:
 	explicit RGBRectangle(GLdouble w, GLdouble h);
+	void render(const glm::mat4& modelViewMat) const override;
 };
 
 class RegularPolygon : public SingleColorEntity
 {
 public:
 	explicit RegularPolygon(GLuint num, GLdouble r);
+};
+
+class Cube : public SingleColorEntity
+{
+public:
+	explicit Cube(GLdouble length);
 };
 
 #endif //_H_Entities_H_

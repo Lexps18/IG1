@@ -18,7 +18,8 @@ public:
 	Scene(const Scene& s) = delete;            // no copy constructor
 	Scene& operator=(const Scene& s) = delete; // no copy assignment
 
-	virtual void init()=0;
+	virtual void init();
+	virtual void update();
 
 	void render(Camera const& cam) const;
 
@@ -36,6 +37,11 @@ protected:
 
 class Scene1 : public Scene {
 public: 
+	void init() override;
+};
+
+class Scene2 : public Scene {
+public:
 	void init() override;
 };
 #endif //_H_Scene_H_

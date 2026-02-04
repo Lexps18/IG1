@@ -32,10 +32,36 @@ IG1App::run() // enters the main event processing loop
 
 	// IG1App main loop
 	while (!glfwWindowShouldClose(mWindow)) {
-		// Redisplay the window if needed
-		if (mNeedsRedisplay) {
-			display();
-			mNeedsRedisplay = false;
+
+		mNextUpdate = glfwGetTime() + FRAME_DURATION;
+
+		while (!glfwWindowShouldClose(mWindow)) {
+			double currentTime = glfwGetTime();
+
+			if (mUpdateEnabled) {
+				if (currentTime >= mNextUpdate) {
+					mScenes[mCurrentScene]->update();
+					mNeedsRedisplay = true;
+					mNextUpdate += FRAME_DURATION;
+				}
+			}
+
+			double timeout;
+			if (mUpdateEnabled) {
+				timeout = mNextUpdate - currentTime;
+				if (timeout < 0.0) timeout = 0.0;
+			}
+			else {
+				timeout = 0.0;
+			}
+
+			glfwWaitEventsTimeout(timeout);
+
+			// Redisplay the window if needed
+			if (mNeedsRedisplay) {
+				display();
+				mNeedsRedisplay = false;
+			}
 		}
 
 		// Stop and wait for new events
@@ -55,10 +81,14 @@ IG1App::init()
 	// allocate memory and resources
 	mViewPort = new Viewport(mWinW, mWinH);
 	mCamera = new Camera(mViewPort);
+	mScenes.push_back(new Scene);
 	mScenes.push_back(new Scene1);
+	mScenes.push_back(new Scene2);
 
 	mCamera->set2D();
 	mScenes[0]->init();
+	mScenes[1]->init();
+	mScenes[2]->init();
 	mScenes[mCurrentScene]->load();
 }
 
@@ -162,6 +192,11 @@ IG1App::key(unsigned int key)
 			break;
 		case 'o':
 			mCamera->set2D();
+			break;
+		case 'u':
+			mUpdateEnabled = !mUpdateEnabled;
+			if (mUpdateEnabled)
+				mNextUpdate = glfwGetTime() + FRAME_DURATION;
 			break;
 		default:
 			if (key >= '0' && key <= '9') {

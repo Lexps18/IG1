@@ -4,7 +4,13 @@
 #include <glm/gtc/type_ptr.hpp>
 
 using namespace glm;
+void
+Scene::init()
+{
+	setGL();
 
+	gObjects.push_back(new RGBAxes(400.0));
+}
 void
 Scene1::init()
 {
@@ -15,11 +21,6 @@ Scene1::init()
 	// Textures
 
 	// Graphics objects (entities) of the scene
-	RGBTriangle* triangulo = new RGBTriangle(200.0); // triangulo
-	//gObjects.push_back(triangulo);
-
-	RGBRectangle* rectangulo = new RGBRectangle(200.0, 100.0); // triangulo
-	gObjects.push_back(rectangulo);
 
 	gObjects.push_back(new RGBAxes(400.0));
 	RegularPolygon* hexagono = new RegularPolygon(6,200.0);//hexagono
@@ -31,6 +32,36 @@ Scene1::init()
 	glm::vec4 amarillo(255.0, 255.0, 0.0, 1.0);
 	circulo->setColor(amarillo);
 	gObjects.push_back(circulo);
+}
+
+void
+Scene2::init()
+{
+	setGL(); // OpenGL settings
+
+	// allocate memory and load resources
+	// Lights
+	// Textures
+
+	// Graphics objects (entities) of the scene
+
+	float r = 200.0f;//radio de la circunferencia
+	gObjects.push_back(new RGBAxes(400.0));
+
+	RGBTriangle* triangulo = new RGBTriangle(70.0, r); // triangulo
+	triangulo->setModelMat(translate(glm::mat4(1.0f), glm::vec3(r, 0.0f, 0.0f)));//mueve el triángulo
+	gObjects.push_back(triangulo);
+
+	RGBRectangle* rectangulo = new RGBRectangle(280.0, 280.0); // rectangulo
+	gObjects.push_back(rectangulo);
+
+	RegularPolygon* circulo = new RegularPolygon(50, r);//circulo
+	glm::vec4 amarillo(255.0, 255.0, 0.0, 1.0);
+	circulo->setColor(amarillo);
+	gObjects.push_back(circulo);
+
+	Cube* cubo = new Cube(200.0); // cubo
+	gObjects.push_back(cubo);
 }
 
 Scene::~Scene()
@@ -84,4 +115,11 @@ Scene::render(Camera const& cam) const
 
 	for (Abs_Entity* el : gObjects)
 		el->render(cam.viewMat());
+}
+
+void 
+Scene::update()
+{
+	for (Abs_Entity* obj : gObjects)
+		obj->update();
 }
