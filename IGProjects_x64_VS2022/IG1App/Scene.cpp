@@ -59,9 +59,27 @@ Scene2::init()
 	glm::vec4 amarillo(255.0, 255.0, 0.0, 1.0);
 	circulo->setColor(amarillo);
 	gObjects.push_back(circulo);
+}
 
-	Cube* cubo = new Cube(200.0); // cubo
-	gObjects.push_back(cubo);
+void
+Scene3::init()
+{
+	setGL(); // OpenGL settings
+
+	// allocate memory and load resources
+	// Lights
+	// Textures
+
+	// Graphics objects (entities) of the scene
+	gObjects.push_back(new RGBAxes(400.0));
+
+	Cube* cuboNgero = new Cube(200.0); // cubo
+	glm::vec4 negro(0.0, 0.0, 0.0, 1.0);
+	cuboNgero->setColor(negro);
+	gObjects.push_back(cuboNgero);
+
+	RGBCube* cuboPintado = new RGBCube(200.0);
+	gObjects.push_back(cuboPintado);
 }
 
 Scene::~Scene()

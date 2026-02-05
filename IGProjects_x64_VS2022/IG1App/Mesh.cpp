@@ -179,20 +179,125 @@ Mesh* Mesh::generateRGBRectangle(GLdouble w, GLdouble h)
 Mesh* Mesh::generateCube(GLdouble length) {
 	Mesh* mesh = new Mesh();
 
-	mesh->mPrimitive = GL_TRIANGLE_STRIP;
-	int num = 8;
-	mesh->mNumVertices = num;
+	mesh->mPrimitive = GL_TRIANGLES;
+	// 6 caras × 2 triángulos × 3 vértices = 36
+	mesh->mNumVertices = 36;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 
-	mesh->vVertices.emplace_back(-length, length, length);
-	mesh->vVertices.emplace_back(-length, -length, length);
-	mesh->vVertices.emplace_back(length, length, length);
-	mesh->vVertices.emplace_back(length, -length, length);
+	GLdouble h = length / 2.0;
 
-	mesh->vVertices.emplace_back(-length, length, -length);
-	mesh->vVertices.emplace_back(-length, -length, -length);
-	mesh->vVertices.emplace_back(length, length, -length);
-	mesh->vVertices.emplace_back(length, -length, -length);
+	//Cara1
+	mesh->vVertices.emplace_back(-h, -h, h);//Triángulo1
+	mesh->vVertices.emplace_back(h, -h, h);
+	mesh->vVertices.emplace_back(h, h, h);
+
+	mesh->vVertices.emplace_back(-h, -h, h);//Triángulo2
+	mesh->vVertices.emplace_back(h, h, h);
+	mesh->vVertices.emplace_back(-h, h, h);
+
+	//Cara2
+	mesh->vVertices.emplace_back(h, -h, -h);//Triángulo1
+	mesh->vVertices.emplace_back(-h, -h, -h);
+	mesh->vVertices.emplace_back(-h, h, -h);
+
+	mesh->vVertices.emplace_back(h, -h, -h);//Triángulo2
+	mesh->vVertices.emplace_back(-h, h, -h);
+	mesh->vVertices.emplace_back(h, h, -h);
+
+	//Cara3
+	mesh->vVertices.emplace_back(h, -h, h);//Triángulo1
+	mesh->vVertices.emplace_back(h, -h, -h);
+	mesh->vVertices.emplace_back(h, h, -h);
+
+	mesh->vVertices.emplace_back(h, -h, h);//Triángulo2
+	mesh->vVertices.emplace_back(h, h, -h);
+	mesh->vVertices.emplace_back(h, h, h);
+
+	//Cara4
+	mesh->vVertices.emplace_back(-h, -h, -h);//Triángulo1
+	mesh->vVertices.emplace_back(-h, -h, h);
+	mesh->vVertices.emplace_back(-h, h, h);
+
+	mesh->vVertices.emplace_back(-h, -h, -h);//Triángulo2
+	mesh->vVertices.emplace_back(-h, h, h);
+	mesh->vVertices.emplace_back(-h, h, -h);
+
+	//Cara5
+	mesh->vVertices.emplace_back(-h, h, h);//Triángulo1
+	mesh->vVertices.emplace_back(h, h, h);
+	mesh->vVertices.emplace_back(h, h, -h);
+
+	mesh->vVertices.emplace_back(-h, h, h);//Triángulo2
+	mesh->vVertices.emplace_back(h, h, -h);
+	mesh->vVertices.emplace_back(-h, h, -h);
+
+	//Cara6
+	mesh->vVertices.emplace_back(-h, -h, -h);//Triángulo1
+	mesh->vVertices.emplace_back(h, -h, -h);
+	mesh->vVertices.emplace_back(h, -h, h);
+
+	mesh->vVertices.emplace_back(-h, -h, -h);//Triángulo2
+	mesh->vVertices.emplace_back(h, -h, h);
+	mesh->vVertices.emplace_back(-h, -h, h);
+
+	return mesh;
+}
+
+Mesh* Mesh::generateRGBCubeTriangles(GLdouble length) 
+{
+	Mesh* mesh = generateCube(length);
+
+	mesh->vColors.reserve(mesh->mNumVertices);
+
+	//Cada cara tiene 6 vertices(dostriangulos)
+	mesh->vColors.push_back({ 1, 0, 0, 1 }); // Rojo
+	mesh->vColors.push_back({ 1, 0, 0, 1 }); // Rojo
+	mesh->vColors.push_back({ 1, 0, 0, 1 }); // Rojo
+
+	mesh->vColors.push_back({ 1, 0, 0, 1 }); // Rojo
+	mesh->vColors.push_back({ 1, 0, 0, 1 }); // Rojo
+	mesh->vColors.push_back({ 1, 0, 0, 1 }); // Rojo
+
+	mesh->vColors.push_back({ 0, 0, 1, 1 }); // Azul
+	mesh->vColors.push_back({ 0, 0, 1, 1 }); // Azul
+	mesh->vColors.push_back({ 0, 0, 1, 1 }); // Azul
+
+	mesh->vColors.push_back({ 0, 0, 1, 1 }); // Azul
+	mesh->vColors.push_back({ 0, 0, 1, 1 }); // Azul
+	mesh->vColors.push_back({ 0, 0, 1, 1 }); // Azul
+
+	mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
+	mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
+	mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
+
+	mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
+	mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
+	mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
+
+
+	mesh->vColors.push_back({ 1, 0, 0, 1 }); // Rojo
+	mesh->vColors.push_back({ 1, 0, 0, 1 }); // Rojo
+	mesh->vColors.push_back({ 1, 0, 0, 1 }); // Rojo
+
+	mesh->vColors.push_back({ 1, 0, 0, 1 }); // Rojo
+	mesh->vColors.push_back({ 1, 0, 0, 1 }); // Rojo
+	mesh->vColors.push_back({ 1, 0, 0, 1 }); // Rojo
+
+	mesh->vColors.push_back({ 0, 0, 1, 1 }); // Azul
+	mesh->vColors.push_back({ 0, 0, 1, 1 }); // Azul
+	mesh->vColors.push_back({ 0, 0, 1, 1 }); // Azul
+
+	mesh->vColors.push_back({ 0, 0, 1, 1 }); // Azul
+	mesh->vColors.push_back({ 0, 0, 1, 1 }); // Azul
+	mesh->vColors.push_back({ 0, 0, 1, 1 }); // Azul
+
+	mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
+	mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
+	mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
+
+	mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
+	mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
+	mesh->vColors.push_back({ 0, 1, 0, 1 }); // Verde
 
 	return mesh;
 }

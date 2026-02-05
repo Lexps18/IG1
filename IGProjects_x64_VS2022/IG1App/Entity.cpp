@@ -86,6 +86,37 @@ Cube::Cube(GLdouble length)
 {
 	mMesh = Mesh::generateCube(length);
 }
+
+RGBCube::RGBCube(GLdouble length)
+{
+	mMesh = Mesh::generateRGBCubeTriangles(length);
+}
+
+void Cube::render(const glm::mat4& modelViewMat)const 
+{
+	if (mMesh != nullptr) {
+		mat4 aMat = modelViewMat * mModelMat;
+		mShader->use();
+		mShader->setUniform("color", mColor);
+		upload(aMat);
+
+		glEnable(GL_CULL_FACE);
+
+		//La cara front se pinta como lineas
+		glCullFace(GL_FRONT);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		mMesh->render();
+
+		//La cara back se pinta como puntos
+		glCullFace(GL_BACK);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+		mMesh->render();
+
+		//Restaura el estado a fill
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glDisable(GL_CULL_FACE);
+	}
+}
 void RGBRectangle::render(const glm::mat4& modelViewMat) const
 {
 	if (mMesh != nullptr) {
