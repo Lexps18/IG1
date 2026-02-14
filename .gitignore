@@ -1,41 +1,17 @@
-# Prerequisites
-*.d
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Linker files
-*.ilk
-
-# Debugger Files
+*.vsidx
+*.ipch
+*.opendb
+*.db
+*.db-shm
+*.db-wal
 *.pdb
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
+*.obj
+*.lastbuildstate
+*.ilk
+*.idb
+*.log
+*.tlog
+*.recipe
 *.exe
-*.out
-*.app
-
-# debug information files
-*.dwo
+.vs/IGProjects_x64_VS2022/v17/.suo
